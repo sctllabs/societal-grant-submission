@@ -1359,6 +1359,13 @@ impl pallet_dao::Config for Runtime {
 	type AssetProvider = Assets;
 }
 
+impl pallet_utility::Config for Runtime {
+	type Event = Event;
+	type Call = Call;
+	type PalletsOrigin = OriginCaller;
+	type WeightInfo = pallet_utility::weights::SubstrateWeight<Runtime>;
+}
+
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
 	pub struct Runtime
@@ -1408,7 +1415,8 @@ construct_runtime!(
 		Society: pallet_society,
 		Multisig: pallet_multisig,
 		DaoCouncil: pallet_dao_collective::<Instance1>,
-		DaoCouncilMemberships: pallet_dao_membership::<Instance1> //TODO: rename
+		DaoCouncilMemberships: pallet_dao_membership::<Instance1>, //TODO: rename
+		Utility: pallet_utility,
 	}
 );
 
