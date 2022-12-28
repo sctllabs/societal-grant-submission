@@ -26,8 +26,8 @@
 
 //! # DAO Membership Module
 //!
-//! Allows control of DAO membership of a set of `AccountId`s, useful for managing membership of of a
-//! collective.
+//! Allows control of DAO membership of a set of `AccountId`s, useful for managing membership of of
+//! a collective.
 
 // Ensure we're `no_std` when compiling for Wasm.
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -275,7 +275,7 @@ pub mod pallet {
 				T::MembershipChanged::change_members_sorted(
 					dao_id,
 					&[new.clone()],
-					&[remove.clone()],
+					&[remove],
 					&members[..],
 				);
 			}
