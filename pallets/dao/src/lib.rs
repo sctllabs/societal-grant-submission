@@ -26,6 +26,7 @@ mod tests;
 #[cfg(feature = "runtime-benchmarks")]
 mod benchmarking;
 
+#[cfg(feature = "runtime-benchmarks")]
 type BalanceOf<T> =
 	<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
 
@@ -298,10 +299,6 @@ pub mod pallet {
 
 		fn u128_to_balance(cost: u128) -> Balance<T> {
 			TryInto::<Balance<T>>::try_into(cost).ok().unwrap()
-		}
-
-		fn u128_to_balance_of(cost: u128) -> BalanceOf<T> {
-			TryInto::<BalanceOf<T>>::try_into(cost).ok().unwrap()
 		}
 	}
 }

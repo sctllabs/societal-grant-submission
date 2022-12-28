@@ -36,7 +36,8 @@
 //! vote on for a minimum period given by `MotionDuration`. As soon as the needed number of
 //! approvals is given, the motion is closed and executed. If the number of approvals is not reached
 //! during the voting period, then `close` may be called by any account in order to force the end
-//! the motion explicitly. The proposal is executed if there are enough approvals counting the new votes.
+//! the motion explicitly. The proposal is executed if there are enough approvals counting the new
+//! votes.
 //!
 //! If there are not, then the motion is dropped without being executed.
 
@@ -94,8 +95,7 @@ pub trait DefaultVote {
 pub struct MoreThanMajorityVote;
 impl DefaultVote for MoreThanMajorityVote {
 	fn default_vote(yes_votes: MemberCount, _no_votes: MemberCount, len: MemberCount) -> bool {
-		let more_than_majority = yes_votes * 2 > len;
-		more_than_majority
+		yes_votes * 2 > len
 	}
 }
 
@@ -991,16 +991,8 @@ impl<T: Config<I>, I: 'static> ChangeDaoMembers<DaoId, T::AccountId> for Pallet<
 		for h in Self::proposals(dao_id).into_iter() {
 			<Voting<T, I>>::mutate(dao_id, h, |v| {
 				if let Some(mut votes) = v.take() {
-					votes.ayes = votes
-						.ayes
-						.into_iter()
-						.filter(|i| outgoing.binary_search(i).is_err())
-						.collect();
-					votes.nays = votes
-						.nays
-						.into_iter()
-						.filter(|i| outgoing.binary_search(i).is_err())
-						.collect();
+					votes.ayes.retain(|i| outgoing.binary_search(i).is_err());
+					votes.nays.retain(|i| outgoing.binary_search(i).is_err());
 					*v = Some(votes);
 				}
 			});

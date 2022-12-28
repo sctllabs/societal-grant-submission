@@ -23,6 +23,7 @@ use sp_runtime::{
 };
 
 use serde_json::{json, Value};
+use sp_runtime::traits::ConstU128;
 use std::collections::HashMap;
 
 type UncheckedExtrinsic = frame_system::mocking::MockUncheckedExtrinsic<Test>;
@@ -92,7 +93,7 @@ parameter_types! {
 	pub TokenName: String = "dao_token".into();
 	pub TokenSymbol: String = "sctl".into();
 	pub TokenDecimals: u8 = 3;
-	pub TokenMinBalance: String = "100000000000".into();
+	pub TokenMinBalance: String = "1000".into();
 }
 
 pub struct TestCouncilProvider;
@@ -223,6 +224,7 @@ impl pallet_dao::Config for Test {
 	type Balance = u128;
 	type CouncilProvider = TestCouncilProvider;
 	type AssetProvider = TestAssetProvider;
+	type DaoTokenBalanceLimit = ConstU128<1_000_000_000>;
 }
 
 // Build genesis storage according to the mock runtime.

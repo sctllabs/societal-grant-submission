@@ -112,7 +112,7 @@ where
 		finality_provider,
 	} = grandpa;
 
-	module.merge(System::new(client.clone(), pool.clone(), deny_unsafe).into_rpc())?;
+	module.merge(System::new(client.clone(), pool, deny_unsafe).into_rpc())?;
 	module.merge(TransactionPayment::new(client.clone()).into_rpc())?;
 	module.merge(Contracts::new(client.clone()).into_rpc())?;
 	module.merge(
